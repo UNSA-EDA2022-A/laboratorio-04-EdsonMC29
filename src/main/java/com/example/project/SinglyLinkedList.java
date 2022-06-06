@@ -100,24 +100,76 @@ public class SinglyLinkedList<T> {
 
     // Elimina aquellos nodos de la lista que esten duplicados
     public void deleteDuplicates() {
-
+    	
+    	if(this.isEmpty())
+            return;
+    	else {
+    	Node<T> n = this.first;
+    	Node<T> m = n.getNext();
+	        for(int i = 0; n!=null; i++){
+	            for(int j = 1; m!=null; j++){
+	                if(n.getValue() == m.getValue()){
+	                    deleteNth(j);
+	                }
+	                m=m.getNext();
+	            }
+	            n=n.getNext();
+	        }
+    	}
     }
 
     // Inserta un nuevo nodo en una posicion especifica de la lista
     public void insertNth(T data, int position) {
-
-    }
+    	Node<T> newNode = new Node<T>(data, null);
+    	Node<T> temp = first;
+    	Node<T> temp2 = first;
+    	if(!this.isEmpty() && position -1 <= size) {
+    		if(position == 0)
+    			addFirst(data);
+    		else if(position == size)
+    			addLast(data);
+    		else {
+    			for(int i = 1; i < position; i++){
+	    			temp = temp.getNext();          
+	                }  
+    				//almacena los valores siguientes de la lista despues de la posicion
+	                temp2 = temp.getNext(); 
+	                
+	        		temp.setNext(newNode);
+	        		newNode.setNext(temp2); 
+	            }
+    		
+    		}
+    	size++;
+    	}
+    	
+    
 
     // Elimina el nodo de una posicion especifica de la lista
     public void deleteNth(int position) {
-
+    	Node<T> temp;
+    	if(!this.isEmpty()) {
+    		if(position == 0)
+    			removeFirst();
+    		else if(position == size)
+    			removeLast();
+    		else {
+	    		for(int i = 1; i < size; i++){
+	    			temp = this.first.getNext();
+	                if(position == i) {
+	                    first.setNext(temp.getNext());
+	                }
+	                size--;	
+	            }
+    		}
+    	}
     }
 
     public static void main(final String[] args) {
 
-        // testExercicio1();
-        // testExercicio2();
-        testExercicio3();       
+         //testExercicio1();
+         testExercicio2();
+        //testExercicio3();       
 
     }
 
@@ -148,7 +200,7 @@ public class SinglyLinkedList<T> {
 
         System.out.println(list);
 
-        list.insertNth('c', 2);
+        list.insertNth('c', 6);
 
         System.out.println(list);
     }
@@ -163,7 +215,7 @@ public class SinglyLinkedList<T> {
 
         System.out.println(list);
 
-        list.deleteNth(2);
+        list.deleteNth(3);
 
         System.out.println(list);
     }
